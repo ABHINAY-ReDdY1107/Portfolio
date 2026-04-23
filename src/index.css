@@ -3,15 +3,21 @@
 :root {
   --bg: #f7f5f0;
   --surface: #ffffff;
+  --surface-soft: #fbfaf7;
   --text: #1a1a1a;
   --text-muted: #888;
   --accent: #c8a96e;
+  --accent-deep: #9f7f42;
   --border: #e8e4dc;
+  --shadow-soft: 0 18px 40px rgba(26, 26, 26, 0.08);
+  --shadow-card: 0 14px 34px rgba(26, 26, 26, 0.05);
+  --radius-card: 24px;
   --font-display: 'Playfair Display', serif;
   --font-body: 'DM Sans', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   background-color: var(--bg);
@@ -20,5 +26,9 @@ body {
   font-weight: 300;
   line-height: 1.6;
 }
+
+img { max-width: 100%; }
+
+a { color: inherit; }
 
 ::selection { background: var(--accent); color: white; }

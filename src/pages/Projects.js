@@ -29,7 +29,7 @@ const projects = [
     description:
       'An NLP-focused project exploring the translation of Gen Z style slang into clearer language, combining language processing ideas with practical experimentation.',
     tags: ['NLP', 'Python', 'Language Processing'],
-    github: 'https://github.com/ABHINAY-ReDdY1107/genz-slang-nlp-project',
+    github: 'https://github.com/ABHINAY-ReDdY1107/genz-to-standard-english-translator',
     live: false,
   },
   {
@@ -38,7 +38,7 @@ const projects = [
     description:
       'A quick-commerce assistant project that uses Python scraping logic to collect real-time product pricing insights across platforms such as Blinkit, Zepto, and Instamart.',
     tags: ['Python', 'Scraping', 'Automation'],
-    github: 'https://github.com/ABHINAY-ReDdY1107',
+    github: 'https://github.com/ABHINAY-ReDdY1107/quick-bots',
     live: false,
   },
 ];

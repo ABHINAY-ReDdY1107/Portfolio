@@ -2,7 +2,33 @@ import React from 'react';
 import profilePhoto from '../assets/abhinay-profile.jpeg';
 import './Home.css';
 
-const skills = ['N8N Automation', 'Python', 'Framer', 'React', 'Web Development'];
+const skills = [
+  {
+    name: 'N8N Automation',
+    category: 'Workflow Design',
+    logo: 'https://cdn.simpleicons.org/n8n/EA4B71',
+  },
+  {
+    name: 'Python',
+    category: 'Programming',
+    logo: 'https://cdn.simpleicons.org/python/3776AB',
+  },
+  {
+    name: 'Framer',
+    category: 'UI Prototyping',
+    logo: 'https://cdn.simpleicons.org/framer/0055FF',
+  },
+  {
+    name: 'React',
+    category: 'Frontend Framework',
+    logo: 'https://cdn.simpleicons.org/react/61DAFB',
+  },
+  {
+    name: 'Web Development',
+    category: 'Responsive Interfaces',
+    logo: 'https://cdn.simpleicons.org/html5/E34F26',
+  },
+];
 const expertise = [
   {
     title: 'Workflow Automation',
@@ -77,9 +103,13 @@ export default function Home() {
         <div className="section-label">Skills</div>
         <div className="skills-list">
           {skills.map((skill) => (
-            <span key={skill} className="skill-pill">
-              {skill}
-            </span>
+            <article key={skill.name} className="skill-card">
+              <div className="skill-logo-wrap">
+                <img className="skill-logo" src={skill.logo} alt={`${skill.name} logo`} />
+              </div>
+              <h3 className="skill-title">{skill.name}</h3>
+              <p className="skill-caption">{skill.category}</p>
+            </article>
           ))}
         </div>
       </section>
