@@ -5,7 +5,8 @@ const projects = [
   {
     number: '01',
     title: 'Hira Fragrances',
-    description: 'Designed and developed a full e-commerce website for Hira Fragrances — a premium perfume brand. Built with a focus on elegant UI and smooth user experience.',
+    description:
+      'Designed and developed a full e-commerce website for Hira Fragrances, a premium perfume brand, with a focus on elegant UI and a smooth user experience.',
     tags: ['Web Design', 'E-Commerce', 'Frontend'],
     link: 'https://hirafragrances.com/',
     github: 'https://github.com/ABHINAY-ReDdY1107',
@@ -14,7 +15,8 @@ const projects = [
   {
     number: '02',
     title: 'Payment Automation System',
-    description: 'Built an end-to-end payment automation workflow for a company using N8N. Streamlined invoice processing and reduced manual work significantly.',
+    description:
+      'Built an end-to-end payment automation workflow for a company using N8N. Streamlined invoice processing and reduced manual work significantly.',
     tags: ['N8N', 'Automation', 'Python'],
     link: '#',
     github: 'https://github.com/ABHINAY-ReDdY1107',
@@ -42,11 +44,21 @@ export default function Projects() {
               </div>
               <p className="project-desc">{project.description}</p>
               <div className="project-tags">
-                {project.tags.map((tag, i) => <span className="tag" key={i}>{tag}</span>)}
+                {project.tags.map((tag) => (
+                  <span className="tag" key={tag}>
+                    {tag}
+                  </span>
+                ))}
               </div>
               <div className="project-links">
-                {project.live && <a href={project.link} target="_blank" rel="noreferrer" className="proj-link">Visit Site →</a>}
-                <a href={project.github} target="_blank" rel="noreferrer" className="proj-link ghost">GitHub →</a>
+                {project.live && (
+                  <a href={project.link} target="_blank" rel="noreferrer" className="proj-link">
+                    Visit Site ->
+                  </a>
+                )}
+                <a href={project.github} target="_blank" rel="noreferrer" className="proj-link ghost">
+                  GitHub ->
+                </a>
               </div>
             </div>
           </div>

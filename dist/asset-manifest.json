@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ABHI-PORTFOLIO/static/css/main.01c1f523.css",
+    "main.js": "/ABHI-PORTFOLIO/static/js/main.2b466bf5.js",
+    "static/js/453.5c6ddc6a.chunk.js": "/ABHI-PORTFOLIO/static/js/453.5c6ddc6a.chunk.js",
+    "index.html": "/ABHI-PORTFOLIO/index.html",
+    "main.01c1f523.css.map": "/ABHI-PORTFOLIO/static/css/main.01c1f523.css.map",
+    "main.2b466bf5.js.map": "/ABHI-PORTFOLIO/static/js/main.2b466bf5.js.map",
+    "453.5c6ddc6a.chunk.js.map": "/ABHI-PORTFOLIO/static/js/453.5c6ddc6a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01c1f523.css",
+    "static/js/main.2b466bf5.js"
+  ]
+}
