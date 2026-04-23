@@ -23,6 +23,24 @@ const projects = [
     live: false,
     comingSoon: true,
   },
+  {
+    number: '03',
+    title: 'Genzy Slang Translation Project',
+    description:
+      'An NLP-focused project exploring the translation of Gen Z style slang into clearer language, combining language processing ideas with practical experimentation.',
+    tags: ['NLP', 'Python', 'Language Processing'],
+    github: 'https://github.com/ABHINAY-ReDdY1107/genz-slang-nlp-project',
+    live: false,
+  },
+  {
+    number: '04',
+    title: 'Quick Bot',
+    description:
+      'A quick-commerce assistant project that uses Python scraping logic to collect real-time product pricing insights across platforms such as Blinkit, Zepto, and Instamart.',
+    tags: ['Python', 'Scraping', 'Automation'],
+    github: 'https://github.com/ABHINAY-ReDdY1107',
+    live: false,
+  },
 ];
 
 export default function Projects() {
@@ -56,9 +74,11 @@ export default function Projects() {
                     Visit Site ->
                   </a>
                 )}
-                <a href={project.github} target="_blank" rel="noreferrer" className="proj-link ghost">
-                  GitHub ->
-                </a>
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noreferrer" className="proj-link ghost">
+                    GitHub ->
+                  </a>
+                )}
               </div>
             </div>
           </div>

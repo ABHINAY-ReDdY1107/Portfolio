@@ -1,7 +1,26 @@
 import React from 'react';
+import profilePhoto from '../assets/abhinay-profile.jpeg';
 import './Home.css';
 
 const skills = ['N8N Automation', 'Python', 'Framer', 'React', 'Web Development'];
+const expertise = [
+  {
+    title: 'Workflow Automation',
+    description: 'Designing automation flows that reduce manual work and improve accuracy across real business tasks.',
+  },
+  {
+    title: 'Frontend Development',
+    description: 'Building clean, responsive interfaces in React with a focus on usability, layout, and polished presentation.',
+  },
+  {
+    title: 'Python and NLP',
+    description: 'Exploring AI-powered applications, text processing, and practical Python solutions for data and language tasks.',
+  },
+  {
+    title: 'Rapid Project Execution',
+    description: 'Turning ideas into working prototypes quickly, from product concepts to deployable portfolio-ready builds.',
+  },
+];
 
 export default function Home() {
   return (
@@ -21,21 +40,36 @@ export default function Home() {
         <div className="section-label">About Me</div>
         <div className="about-grid">
           <div className="about-photo-box">
-            <div className="photo-placeholder">
-              <span>Your Photo</span>
+            <div className="about-photo-frame">
+              <img className="about-photo" src={profilePhoto} alt="Abhinay Reddy" />
             </div>
           </div>
           <div className="about-text">
             <h2>Hi, I'm Abhinay</h2>
-            <p>I'm a student at Mahindra University passionate about building smart systems and elegant digital experiences.</p>
+            <p>I am a student at Mahindra University who enjoys building smart systems, practical automations, and modern digital experiences.</p>
             <p style={{ marginTop: '16px' }}>
-              From automating payment workflows to crafting clean websites, I enjoy working at the intersection of technology and creativity.
+              My work sits at the intersection of creativity and problem-solving, whether I am creating a polished website, experimenting with NLP ideas, or building workflow tools that save time.
+            </p>
+            <p style={{ marginTop: '16px' }}>
+              I like projects that are useful in the real world and visually well presented, and I am always looking to grow through hands-on development across web, automation, and AI-focused projects.
             </p>
             <div className="research-box">
               <div className="research-title">Research Interests</div>
               <p>Workflow Automation, No-Code/Low-Code Tools, Web Technologies, AI-powered applications</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section expertise-section">
+        <div className="section-label">Area of Expertise</div>
+        <div className="expertise-grid">
+          {expertise.map((item) => (
+            <article className="expertise-card" key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))}
         </div>
       </section>
 
