@@ -72,11 +72,11 @@
 }
 
 .section-label {
-  font-size: 0.7rem;
+  font-size: 0.86rem;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--accent);
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 48px;
 }
 
@@ -252,15 +252,21 @@
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--accent);
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
 .contact-value {
-  font-size: 0.98rem;
+  font-size: 1rem;
   color: var(--text);
   word-break: break-all;
   line-height: 1.7;
+  font-weight: 700;
+}
+
+.contact-section .section-label {
+  font-size: 0.95rem;
+  font-weight: 800;
 }
 
 .contact-value a {

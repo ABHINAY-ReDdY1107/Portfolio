@@ -25,7 +25,7 @@ const projects = [
   },
   {
     number: '03',
-    title: 'Genzy Slang Translation Project',
+    title: 'Genz Slang Translation Project',
     description:
       'An NLP-focused project exploring the translation of Gen Z style slang into clearer language, combining language processing ideas with practical experimentation.',
     tags: ['NLP', 'Python', 'Language Processing'],
