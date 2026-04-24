@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/ABHI-PORTFOLIO/static/css/main.01c1f523.css",
-    "main.js": "/ABHI-PORTFOLIO/static/js/main.ec9f05b3.js",
-    "static/js/453.5c6ddc6a.chunk.js": "/ABHI-PORTFOLIO/static/js/453.5c6ddc6a.chunk.js",
-    "index.html": "/ABHI-PORTFOLIO/index.html",
-    "main.01c1f523.css.map": "/ABHI-PORTFOLIO/static/css/main.01c1f523.css.map",
-    "main.ec9f05b3.js.map": "/ABHI-PORTFOLIO/static/js/main.ec9f05b3.js.map",
-    "453.5c6ddc6a.chunk.js.map": "/ABHI-PORTFOLIO/static/js/453.5c6ddc6a.chunk.js.map"
+    "main.css": "/Portfolio/static/css/main.5f159a2c.css",
+    "main.js": "/Portfolio/static/js/main.d0393f72.js",
+    "static/js/453.5c6ddc6a.chunk.js": "/Portfolio/static/js/453.5c6ddc6a.chunk.js",
+    "static/media/abhinay-profile.jpeg": "/Portfolio/static/media/abhinay-profile.7a10b13cfa5ea7d97254.jpeg",
+    "index.html": "/Portfolio/index.html",
+    "main.5f159a2c.css.map": "/Portfolio/static/css/main.5f159a2c.css.map",
+    "main.d0393f72.js.map": "/Portfolio/static/js/main.d0393f72.js.map",
+    "453.5c6ddc6a.chunk.js.map": "/Portfolio/static/js/453.5c6ddc6a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.01c1f523.css",
-    "static/js/main.ec9f05b3.js"
+    "static/css/main.5f159a2c.css",
+    "static/js/main.d0393f72.js"
   ]
 }
