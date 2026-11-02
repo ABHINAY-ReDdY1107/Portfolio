@@ -10,6 +10,7 @@ jest.mock('react-router-dom', () => ({
   NavLink: ({ to, children, ...props }) => <a href={to} {...props}>{children}</a>,
   Outlet: () => <div data-testid="outlet" />,
   useLocation: () => ({ pathname: '/', hash: '' }),
+  useNavigate: () => jest.fn(),
 }));
 
 import App from './App';
@@ -49,4 +50,20 @@ test('renders Projects page and supports search filtering', () => {
   const webPill = screen.getByRole('tab', { name: 'Web' });
   fireEvent.click(webPill);
   expect(screen.getByText(/Hira Fragrances/i)).toBeInTheDocument();
+});
+
+test('opens project modal when card is inspected', () => {
+  render(<Home />);
+  const inspectButtons = screen.getAllByText(/Inspect Details/i);
+  expect(inspectButtons.length).toBeGreaterThan(0);
+
+  // Click first inspect button
+  fireEvent.click(inspectButtons[0]);
+  expect(screen.getByRole('dialog')).toBeInTheDocument();
+  expect(screen.getByText(/Architectural Details/i)).toBeInTheDocument();
+
+  // Close modal
+  const closeBtn = screen.getByLabelText(/Close project modal/i);
+  fireEvent.click(closeBtn);
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 });

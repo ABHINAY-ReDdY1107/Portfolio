@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import profilePhoto from '../assets/abhinay-profile.jpeg';
+import ProjectModal from '../components/ProjectModal';
 
 export const projectsData = [
   {
@@ -76,7 +77,7 @@ export const projectsData = [
     github: 'https://github.com/ABHINAY-ReDdY1107',
     live: '',
     cardClass: 'card-five',
-    stats: { role: 'Workflow Eng', stack: 'N8N · Python', status: 'Automated' }
+    stats: { role: 'Workflow Eng', stack: 'N8N · Python', status: 'Automated Pipeline' }
   },
   {
     id: 'lost-found',
@@ -106,7 +107,7 @@ export const projectsData = [
     github: 'https://github.com/ABHINAY-ReDdY1107',
     live: '',
     cardClass: 'card-seven',
-    stats: { role: 'UI Developer', stack: 'JavaScript · CSS3', status: 'Showcase' }
+    stats: { role: 'UI Developer', stack: 'JavaScript · CSS3', status: 'Business Showcase' }
   },
   {
     id: 'bill-generator',
@@ -121,7 +122,7 @@ export const projectsData = [
     github: 'https://github.com/ABHINAY-ReDdY1107',
     live: '',
     cardClass: 'card-eight',
-    stats: { role: 'Software Builder', stack: 'Python · HTML/JS', status: 'Utility App' }
+    stats: { role: 'Software Builder', stack: 'Python · HTML/JS', status: 'Utility Software' }
   }
 ];
 
@@ -239,13 +240,37 @@ const faqs = [
   }
 ];
 
-export default function Home() {
+export default function Home({ scrollTo }) {
   const [isWalletOpen, setIsWalletOpen] = useState(true);
   const [activeProjectId, setActiveProjectId] = useState(projectsData[0].id);
+  const [modalProject, setModalProject] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', subject: 'Collaboration', message: '' });
 
   const activeProject = projectsData.find((p) => p.id === activeProjectId) || projectsData[0];
+
+  useEffect(() => {
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollTo);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    }
+  }, [scrollTo]);
+
+  const scrollToSection = (sectionId) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleCardClick = (project) => {
+    setActiveProjectId(project.id);
+    setModalProject(project);
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -258,6 +283,9 @@ export default function Home() {
 
   return (
     <div className="portfolio-wrap">
+      {/* Project Details Modal */}
+      <ProjectModal project={modalProject} onClose={() => setModalProject(null)} />
+
       {/* ═══════════════════════════════════════════════════
           HERO SECTION
           ═══════════════════════════════════════════════════ */}
@@ -286,20 +314,28 @@ export default function Home() {
           </p>
 
           <div className="hero-actions">
-            <a href="#projects" className="button button-primary">
-              View Projects
-            </a>
+            <button
+              type="button"
+              className="button button-primary"
+              onClick={() => scrollToSection('projects')}
+            >
+              Explore Projects
+            </button>
             <a
               href="https://github.com/ABHINAY-ReDdY1107"
               target="_blank"
               rel="noreferrer"
               className="button button-ghost"
             >
-              GitHub Repository
+              GitHub Repository ↗
             </a>
-            <a href="#contact" className="button button-ghost">
+            <button
+              type="button"
+              className="button button-ghost"
+              onClick={() => scrollToSection('contact')}
+            >
               Get in Touch
-            </a>
+            </button>
           </div>
         </div>
 
@@ -435,7 +471,7 @@ export default function Home() {
           <p className="eyebrow">02 / Selected Works</p>
           <h2 className="section-title">Portfolio Wallet</h2>
           <p className="section-copy">
-            Click the wallet to unpack featured projects. Choose any card to view detailed architectural specifications.
+            Click the wallet to unpack featured projects. Select any card to inspect full architectural specifications.
           </p>
         </div>
 
@@ -444,7 +480,7 @@ export default function Home() {
             <h3>The Builder&apos;s Pocket</h3>
             <p>
               Interactive showcase featuring production web apps, emergency broadcast pipelines,
-              and automated scrapers. Click the leather wallet to fan out cards.
+              and automated scrapers. Click any project card to open full details.
             </p>
             <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
               <button
@@ -452,7 +488,7 @@ export default function Home() {
                 className="button button-primary"
                 onClick={() => setIsWalletOpen((prev) => !prev)}
               >
-                {isWalletOpen ? 'Close Wallet' : 'Open Wallet'}
+                {isWalletOpen ? 'Fold Wallet' : 'Unpack Wallet'}
               </button>
               <Link to="/projects" className="button button-ghost">
                 Full Catalog &rarr;
@@ -489,11 +525,12 @@ export default function Home() {
                   <div
                     key={proj.id}
                     className={`wallet-card ${proj.cardClass} ${isActive ? 'is-active' : ''}`}
-                    onClick={() => setActiveProjectId(proj.id)}
+                    onClick={() => handleCardClick(proj)}
                     role="button"
                     tabIndex={0}
+                    aria-label={`Open ${proj.title} details`}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') setActiveProjectId(proj.id);
+                      if (e.key === 'Enter') handleCardClick(proj);
                     }}
                   >
                     <div
@@ -539,10 +576,10 @@ export default function Home() {
                         className="project-card-link"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setActiveProjectId(proj.id);
+                          handleCardClick(proj);
                         }}
                       >
-                        Inspect &rarr;
+                        Inspect Details &rarr;
                       </button>
                     </div>
                   </div>
@@ -602,6 +639,15 @@ export default function Home() {
                         {activeProject.subtitle}
                       </p>
                     </div>
+
+                    <button
+                      type="button"
+                      className="button button-primary"
+                      onClick={() => setModalProject(activeProject)}
+                      style={{ marginTop: '0.5rem', padding: '0.65rem 1.25rem', fontSize: '0.72rem' }}
+                    >
+                      Open Full Screen View ↗
+                    </button>
                   </div>
                 </div>
 
@@ -625,14 +671,15 @@ export default function Home() {
                       <dd>{activeProject.stats?.status || 'Active'}</dd>
                     </div>
                     <div>
-                      <dt>Links</dt>
-                      <dd style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+                      <dt>Quick Actions</dt>
+                      <dd style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
                         {activeProject.live && (
                           <a
                             href={activeProject.live}
                             target="_blank"
                             rel="noreferrer"
-                            style={{ color: 'var(--gold-light)', fontWeight: 600, textDecoration: 'underline' }}
+                            className="catalog-btn catalog-btn-primary"
+                            style={{ padding: '0.35rem 0.8rem', fontSize: '0.68rem' }}
                           >
                             Live Demo ↗
                           </a>
@@ -642,11 +689,20 @@ export default function Home() {
                             href={activeProject.github}
                             target="_blank"
                             rel="noreferrer"
-                            style={{ color: 'var(--gold-light)', fontWeight: 600, textDecoration: 'underline' }}
+                            className="catalog-btn catalog-btn-outline"
+                            style={{ color: '#fff', borderColor: 'rgba(196, 169, 109, 0.4)', padding: '0.35rem 0.8rem', fontSize: '0.68rem' }}
                           >
                             GitHub ↗
                           </a>
                         )}
+                        <button
+                          type="button"
+                          className="catalog-btn catalog-btn-outline"
+                          onClick={() => setModalProject(activeProject)}
+                          style={{ color: 'var(--gold-light)', borderColor: 'rgba(196, 169, 109, 0.4)', padding: '0.35rem 0.8rem', fontSize: '0.68rem' }}
+                        >
+                          Specs &rarr;
+                        </button>
                       </dd>
                     </div>
                   </dl>
@@ -791,12 +847,12 @@ export default function Home() {
 
             <span style={{ marginTop: '1rem' }}>GitHub</span>
             <a href="https://github.com/ABHINAY-ReDdY1107" target="_blank" rel="noreferrer">
-              github.com/ABHINAY-ReDdY1107
+              github.com/ABHINAY-ReDdY1107 ↗
             </a>
 
             <span style={{ marginTop: '1rem' }}>LinkedIn</span>
             <a href="https://www.linkedin.com/in/abhinay-reddy" target="_blank" rel="noreferrer">
-              linkedin.com/in/abhinay-reddy
+              linkedin.com/in/abhinay-reddy ↗
             </a>
 
             <span style={{ marginTop: '1rem' }}>Location &amp; University</span>

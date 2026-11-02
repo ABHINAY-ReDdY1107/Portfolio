@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
@@ -22,19 +23,55 @@ export default function Navbar() {
     }
   }, [menuOpen]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [location]);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
+
+  const handleNav = (sectionId) => {
+    closeMenu();
+
+    if (sectionId === 'top') {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'nav-active' : ''}`}>
-      <Link to="/" className="brand" onClick={closeMenu}>
+      <button
+        type="button"
+        className="brand"
+        onClick={() => handleNav('top')}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
+        aria-label="Return to top"
+      >
         AR
-      </Link>
+      </button>
 
       <button
         type="button"
@@ -48,27 +85,52 @@ export default function Navbar() {
       </button>
 
       <nav className={`site-nav ${menuOpen ? 'is-open' : ''}`}>
-        <Link to="/" onClick={closeMenu}>
+        <button
+          type="button"
+          className="nav-link-btn"
+          onClick={() => handleNav('top')}
+        >
           Home
-        </Link>
-        <a href="#about" onClick={closeMenu}>
+        </button>
+        <button
+          type="button"
+          className="nav-link-btn"
+          onClick={() => handleNav('about')}
+        >
           About
-        </a>
-        <a href="#capabilities" onClick={closeMenu}>
+        </button>
+        <button
+          type="button"
+          className="nav-link-btn"
+          onClick={() => handleNav('capabilities')}
+        >
           Focus
-        </a>
+        </button>
         <Link to="/projects" onClick={closeMenu}>
           Projects
         </Link>
-        <a href="#journey" onClick={closeMenu}>
+        <button
+          type="button"
+          className="nav-link-btn"
+          onClick={() => handleNav('journey')}
+        >
           Journey
-        </a>
-        <a href="#faq" onClick={closeMenu}>
+        </button>
+        <button
+          type="button"
+          className="nav-link-btn"
+          onClick={() => handleNav('faq')}
+        >
           FAQ
-        </a>
-        <a href="#contact" className="nav-cta" onClick={closeMenu}>
+        </button>
+        <button
+          type="button"
+          className="nav-cta"
+          onClick={() => handleNav('contact')}
+          style={{ border: 'none', cursor: 'pointer' }}
+        >
           Get in Touch
-        </a>
+        </button>
       </nav>
     </header>
   );

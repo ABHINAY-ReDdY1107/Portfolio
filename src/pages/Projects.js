@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { projectsData } from './Home';
+import ProjectModal from '../components/ProjectModal';
 
 const categories = ['All', 'Web', 'AI', 'Automation', 'Software'];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [modalProject, setModalProject] = useState(null);
 
   const filteredProjects = useMemo(() => {
     return projectsData.filter((project) => {
@@ -27,6 +29,9 @@ export default function Projects() {
 
   return (
     <div className="portfolio-wrap">
+      {/* Project Details Modal */}
+      <ProjectModal project={modalProject} onClose={() => setModalProject(null)} />
+
       {/* Catalog Hero */}
       <section className="catalog-hero">
         <div style={{ maxWidth: '820px', margin: '0 auto', padding: '0 1.5rem' }}>
@@ -36,7 +41,7 @@ export default function Projects() {
           </h1>
           <p className="section-copy" style={{ color: 'rgba(253, 251, 248, 0.7)', margin: '1rem auto 0' }}>
             A curated portfolio of software products, intelligent automations, and web applications
-            engineered for utility and performance.
+            engineered for utility and performance. Click any card to inspect full specifications.
           </p>
 
           {/* Controls: Search + Category Filters */}
@@ -110,7 +115,12 @@ export default function Projects() {
           ) : (
             <div className="catalog-grid">
               {filteredProjects.map((project) => (
-                <article className="catalog-card reveal" key={project.id}>
+                <article
+                  className="catalog-card reveal"
+                  key={project.id}
+                  onClick={() => setModalProject(project)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="catalog-card-header">
                     <span className="catalog-card-category">{project.category}</span>
                     <div className="catalog-card-icon">✦</div>
@@ -131,8 +141,8 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  <div className="catalog-card-actions">
-                    {project.live ? (
+                  <div className="catalog-card-actions" onClick={(e) => e.stopPropagation()}>
+                    {project.live && (
                       <a
                         href={project.live}
                         target="_blank"
@@ -141,9 +151,9 @@ export default function Projects() {
                       >
                         Live Demo ↗
                       </a>
-                    ) : null}
+                    )}
 
-                    {project.github ? (
+                    {project.github && (
                       <a
                         href={project.github}
                         target="_blank"
@@ -152,13 +162,16 @@ export default function Projects() {
                       >
                         GitHub Repo ↗
                       </a>
-                    ) : null}
-
-                    {!project.live && !project.github && (
-                      <span style={{ fontSize: '0.75rem', color: 'var(--mid)', fontStyle: 'italic' }}>
-                        In Development / Internal
-                      </span>
                     )}
+
+                    <button
+                      type="button"
+                      className="catalog-btn catalog-btn-outline"
+                      onClick={() => setModalProject(project)}
+                      style={{ color: 'var(--gold)', borderColor: 'rgba(139, 115, 64, 0.3)' }}
+                    >
+                      Details &rarr;
+                    </button>
                   </div>
                 </article>
               ))}
