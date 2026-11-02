@@ -1,157 +1,170 @@
-import React, { useState } from 'react';
-import './Projects.css';
-
-const projectsData = [
-  {
-    id: 'hira-fragrances',
-    title: 'Hira Fragrances',
-    description: 'Designed and developed a premium e-commerce interface for a luxury perfume brand, focusing on minimal aesthetics, smooth user interactions, and clean navigation.',
-    details: 'Features a catalog search, product detail grids, responsive layouts for mobile and desktop, and a streamlined check-out interface.',
-    tags: ['React', 'HTML', 'CSS', 'JavaScript', 'Vercel'],
-    category: 'Web',
-    github: '',
-    live: 'https://hirafragrances.com/'
-  },
-  {
-    id: 'sosync',
-    title: 'SOSync / Emergency Alert System',
-    description: 'A critical emergency alert and coordinate system designed to broadcast localized SOS notifications in urgent situations.',
-    details: 'Configures emergency contacts and utilizes geolocation APIs to transmit coordinates immediately, prioritizing fast execution and low latency.',
-    tags: ['TypeScript', 'Node.js', 'APIs', 'Web Development'],
-    category: 'Software',
-    github: 'https://github.com/ABHINAY-ReDdY1107/SOSYNC',
-    live: ''
-  },
-  {
-    id: 'genz-translator',
-    title: 'GenZ Translator',
-    description: 'An NLP-focused experimentation project exploring translation of contemporary Gen Z slang into standard English phrases.',
-    details: 'Leverages text tokenization, dictionary mappings, and NLP fundamentals to translate informal youth slang into grammatically clear standard English.',
-    tags: ['Python', 'NLP', 'Language Processing', 'Jupyter Notebook'],
-    category: 'AI',
-    github: 'https://github.com/ABHINAY-ReDdY1107/genz-to-standard-english-translator',
-    live: ''
-  },
-  {
-    id: 'quick-bots',
-    title: 'Quick Bot / Commerce Assistant',
-    description: 'A scraping assistant that aggregates and compares real-time pricing data across quick-commerce apps like Blinkit, Zepto, and Instamart.',
-    details: 'Automates searches and parses web elements to yield quick cost comparisons, assisting in finding the best deals across delivery networks.',
-    tags: ['Python', 'Web Scraping', 'Automation', 'Data Processing'],
-    category: 'Automation',
-    github: 'https://github.com/ABHINAY-ReDdY1107/quick-bots',
-    live: ''
-  },
-  {
-    id: 'payment-automation',
-    title: 'Payment Automation',
-    description: 'An automated workflow system designed to streamline receipt processing and payment notifications for small operations.',
-    details: 'Configures workflow triggers to match invoice dates and generate automated ledger entries, cutting manual verification time down significantly.',
-    tags: ['N8N', 'Python', 'Automation', 'REST APIs'],
-    category: 'Automation',
-    github: '',
-    live: ''
-  },
-  {
-    id: 'lost-found',
-    title: 'Lost & Found',
-    description: 'A lightweight community platform concept designed for students to report lost items and claim found belongings.',
-    details: 'Provides listing cards, search filters, and an email reference system for students to directly contact the finders of lost articles.',
-    tags: ['React', 'Node.js', 'Databases', 'Web Development'],
-    category: 'Web',
-    github: '',
-    live: ''
-  },
-  {
-    id: 'vave-salon',
-    title: 'Vave Salon',
-    description: 'A modern, clean booking and service showcase interface customized for a styling salon business.',
-    details: 'Showcases interactive service tables, stylist bios, and a responsive reservation enquiry form.',
-    tags: ['HTML', 'CSS', 'JavaScript', 'Responsive Design'],
-    category: 'Web',
-    github: '',
-    live: ''
-  },
-  {
-    id: 'bill-generator',
-    title: 'Bill Generator',
-    description: 'A lightweight software utility built to fast-track small business billing and receipt generation.',
-    details: 'Accepts tabular items input, computes tax percentages, and yields clean, printable PDF receipts instantly.',
-    tags: ['Python', 'HTML', 'CSS', 'JavaScript'],
-    category: 'Software',
-    github: '',
-    live: ''
-  }
-];
+import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { projectsData } from './Home';
 
 const categories = ['All', 'Web', 'AI', 'Automation', 'Software'];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredProjects = activeCategory === 'All'
-    ? projectsData
-    : projectsData.filter(project => project.category === activeCategory);
+  const filteredProjects = useMemo(() => {
+    return projectsData.filter((project) => {
+      const matchesCategory =
+        activeCategory === 'All' || project.category === activeCategory;
+
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        project.title.toLowerCase().includes(q) ||
+        project.subtitle.toLowerCase().includes(q) ||
+        project.description.toLowerCase().includes(q) ||
+        project.tags.some((tag) => tag.toLowerCase().includes(q));
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
 
   return (
-    <div className="page projects-page">
-      <section className="projects-hero">
-        <span className="section-label">Selected Work</span>
-        <h1 className="projects-title">Projects</h1>
-        <p className="projects-subtitle">
-          A collection of web applications, automations, and software projects I have built while exploring computer science and artificial intelligence.
-        </p>
+    <div className="portfolio-wrap">
+      {/* Catalog Hero */}
+      <section className="catalog-hero">
+        <div style={{ maxWidth: '820px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <p className="eyebrow">Comprehensive Directory</p>
+          <h1 className="section-title" style={{ color: 'var(--white)', fontSize: 'clamp(2.75rem, 6vw, 4.8rem)' }}>
+            Selected Projects
+          </h1>
+          <p className="section-copy" style={{ color: 'rgba(253, 251, 248, 0.7)', margin: '1rem auto 0' }}>
+            A curated portfolio of software products, intelligent automations, and web applications
+            engineered for utility and performance.
+          </p>
 
-        {/* Filter Bar */}
-        <div className="filter-bar">
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
+          {/* Controls: Search + Category Filters */}
+          <div className="catalog-controls">
+            <div className="catalog-search-wrapper">
+              <svg className="catalog-search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="text"
+                className="catalog-search-input"
+                placeholder="Search projects by name, technology, or keywords..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search projects"
+              />
+            </div>
+
+            <div className="catalog-filters" role="tablist">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeCategory === cat}
+                  className={`filter-pill ${activeCategory === cat ? 'is-active' : ''}`}
+                  onClick={() => setActiveCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="projects-grid">
-        {filteredProjects.map((project) => (
-          <article className="project-card" key={project.id}>
-            <div className="project-card-header">
-              <span className="project-category">{project.category}</span>
-              <h2 className="project-card-title">{project.title}</h2>
-            </div>
-            
-            <div className="project-card-body">
-              <p className="project-desc">{project.description}</p>
-              <p className="project-details">{project.details}</p>
-              
-              <div className="project-tags">
-                {project.tags.map((tag) => (
-                  <span className="tag" key={tag}>{tag}</span>
-                ))}
-              </div>
-            </div>
+      {/* Catalog Grid Section */}
+      <section className="section" style={{ background: 'var(--light)', minHeight: '60vh' }}>
+        <div style={{ width: 'min(1180px, 100%)', margin: '0 auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+            <span style={{ color: 'var(--mid)', fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Showing {filteredProjects.length} {filteredProjects.length === 1 ? 'Project' : 'Projects'}
+            </span>
 
-            <div className="project-card-actions">
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noreferrer" className="project-link btn-secondary">
-                  GitHub
-                </a>
-              )}
-              {project.live && (
-                <a href={project.live} target="_blank" rel="noreferrer" className="project-link btn-primary">
-                  Live Demo
-                </a>
-              )}
-              {!project.github && !project.live && (
-                <span className="no-links-label">Private Repository</span>
-              )}
+            <Link to="/" style={{ color: 'var(--gold)', fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+              &larr; Return to Home
+            </Link>
+          </div>
+
+          {filteredProjects.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '5rem 1rem', background: 'var(--white)', borderRadius: 'var(--radius-md)', border: '1px solid var(--line-soft)' }}>
+              <p style={{ fontFamily: 'var(--serif)', fontSize: '2rem', color: 'var(--dark)', margin: 0 }}>
+                No projects matched your search.
+              </p>
+              <p style={{ color: 'var(--mid)', marginTop: '0.5rem' }}>
+                Try adjusting your search query or switching categories.
+              </p>
+              <button
+                type="button"
+                className="catalog-btn catalog-btn-primary"
+                style={{ marginTop: '1.5rem' }}
+                onClick={() => {
+                  setSearchQuery('');
+                  setActiveCategory('All');
+                }}
+              >
+                Reset Filters
+              </button>
             </div>
-          </article>
-        ))}
+          ) : (
+            <div className="catalog-grid">
+              {filteredProjects.map((project) => (
+                <article className="catalog-card reveal" key={project.id}>
+                  <div className="catalog-card-header">
+                    <span className="catalog-card-category">{project.category}</span>
+                    <div className="catalog-card-icon">✦</div>
+                  </div>
+
+                  <h3 className="catalog-card-title">{project.title}</h3>
+                  <span style={{ color: 'var(--gold)', fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.8rem', display: 'block' }}>
+                    {project.subtitle}
+                  </span>
+
+                  <p className="catalog-card-desc">{project.description}</p>
+
+                  <div className="catalog-card-tags">
+                    {project.tags.map((tag) => (
+                      <span className="catalog-tag" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="catalog-card-actions">
+                    {project.live ? (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="catalog-btn catalog-btn-primary"
+                      >
+                        Live Demo ↗
+                      </a>
+                    ) : null}
+
+                    {project.github ? (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="catalog-btn catalog-btn-outline"
+                      >
+                        GitHub Repo ↗
+                      </a>
+                    ) : null}
+
+                    {!project.live && !project.github && (
+                      <span style={{ fontSize: '0.75rem', color: 'var(--mid)', fontStyle: 'italic' }}>
+                        In Development / Internal
+                      </span>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
